@@ -14,7 +14,7 @@ public abstract class AbsAlgo implements Solver {
     protected boolean[][] used;
     protected Cell[][] cellMaze;
 
-    protected void fillData(final Maze maze, final Coordinate end) {
+    private void fillData(final Maze maze, final Coordinate end) {
         this.end = end;
         used = new boolean[maze.height()][maze.width()];
         way = new ArrayList<>(maze.height() * maze.width());
