@@ -71,6 +71,11 @@ public class MazeTest {
         Assertions.assertDoesNotThrow(() -> Main.main(new String[] {"--invalid flag", null, "rand word"}));
     }
 
+    @Test
+    public void testBadParams4() {
+        Assertions.assertDoesNotThrow(() -> Main.main(new String[] {"--height=-2", "--width=3", "--start=0,4"}));
+    }
+
     @Disabled
     @Test
     public void testValidView1() {

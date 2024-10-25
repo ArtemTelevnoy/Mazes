@@ -118,6 +118,10 @@ public class Main {
         return defaultValue;
     }
 
+    private static Coordinate validateCord(final Coordinate cord, final int h, final int w) {
+        return new Coordinate(Math.min(cord.row(), h - 1), Math.min(cord.col(), w - 1));
+    }
+
     public static void main(String[] args) {
         if (args != null && Arrays.asList(args).contains("--help")) {
             for (final String inf : INF) {
@@ -127,8 +131,10 @@ public class Main {
 
         final int width = getParam(args, DEFAULT_WIDTH, "--width", PARSE_INT);
         final int height = getParam(args, DEFAULT_HEIGHT, "--height", PARSE_INT);
-        final Coordinate startPoint = getParam(args, DEFAULT_START_POINT, "--start", PARSE_CORD);
-        final Coordinate endPoint = getParam(args, new Coordinate(height - 1, width - 1), "--end", PARSE_CORD);
+        final Coordinate startPoint = validateCord(getParam(
+            args, DEFAULT_START_POINT, "--start", PARSE_CORD), height, width);
+        final Coordinate endPoint = validateCord(getParam(
+            args, new Coordinate(height - 1, width - 1), "--end", PARSE_CORD), height, width);
         final Generator generator = getParam(args, DEFAULT_GENERATOR, GENERATORS.keySet(), GENERATORS::get);
         final Solver solver = getParam(args, DEFAULT_SOLVER, SOLVERS.keySet(), SOLVERS::get);
 
