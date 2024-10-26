@@ -11,6 +11,8 @@ public class SimpleRenderer implements Renderer {
     private static final String PASSAGE_SYMBOL = "⬛️";
     private static final String WALL_SYMBOL = "⬜️";
     private static final String END_SYMBOL = "🟥";
+    private static final String BAD_SYMBOL = "\uD83D\uDC89";
+    private static final String COIN_SYMBOL = "\uD83D\uDC8A";
 
     @Override
     public String render(Maze maze) {
@@ -30,7 +32,7 @@ public class SimpleRenderer implements Renderer {
     }
 
     private static String makeString(final Maze maze) {
-        final Type[][] grid = maze.getMaze();
+        final Type[][] grid = maze.cellTypes();
         final StringBuilder sb = new StringBuilder();
         sb.append(WALL_SYMBOL.repeat(maze.width() * 2 + 1)).append(System.lineSeparator());
 
@@ -43,6 +45,8 @@ public class SimpleRenderer implements Renderer {
                     case PASSAGE -> PASSAGE_SYMBOL;
                     case WALL -> WALL_SYMBOL;
                     case END -> END_SYMBOL;
+                    case BAD -> BAD_SYMBOL;
+                    case COIN -> COIN_SYMBOL;
                 });
             }
 

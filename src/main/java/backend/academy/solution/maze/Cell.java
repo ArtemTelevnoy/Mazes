@@ -2,18 +2,28 @@ package backend.academy.solution.maze;
 
 import java.util.ArrayList;
 import java.util.List;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.Setter;
 
 /**
  * view of cell in graph
  * @author Artem Televnoy
  */
-@AllArgsConstructor
 @Getter public final class Cell {
     private final int row;
     private final int col;
     private final List<Cell> neighbors = new ArrayList<>();
+    @Setter private Type type = Type.PASSAGE;
+
+    /**
+     * Constructor
+     * @param row row of {@link Cell}
+     * @param col col of {@link Cell}
+     */
+    public Cell(int row, int col) {
+        this.row = row;
+        this.col = col;
+    }
 
     /**
      * check equals of coordinates

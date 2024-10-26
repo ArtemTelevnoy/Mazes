@@ -3,6 +3,7 @@ package backend.academy.solution;
 import backend.academy.solution.generators.Generator;
 import backend.academy.solution.generators.KruskalGen;
 import backend.academy.solution.generators.PrimGen;
+import backend.academy.solution.generators.RandGen;
 import backend.academy.solution.maze.Coordinate;
 import backend.academy.solution.maze.Maze;
 import backend.academy.solution.renderers.Renderer;
@@ -34,17 +35,20 @@ public class Main {
 
     private static final String[] INF = new String[] {
         "--help for this info",
-        "--prim | --kruskal for choosing gen algo",
+        "--prim | --kruskal | --randPrim | --randKruskal for choosing gen algo",
         "--dfs | --bfs for choosing solver algo",
         "--width=val for choosing width where val-some number",
         "--height=val for choosing height where val-some number",
         "--start=x,y for choosing coordinate(x,y) of start point",
-        "--end=x,y for choosing coordinate(x,y) of end point"
+        "--end=x,y for choosing coordinate(x,y) of end point",
+        "--cellTypes for add new type of cells"
     };
 
     private static final Map<String, Generator> GENERATORS = Map.of(
         "--prim", new PrimGen(),
-        "--kruskal", new KruskalGen()
+        "--kruskal", new KruskalGen(),
+        "--randPrim", new RandGen(new PrimGen()),
+        "--randKruskal", new RandGen(new KruskalGen())
     );
 
     private static final Map<String, Solver> SOLVERS = Map.of(
@@ -139,6 +143,9 @@ public class Main {
         final Solver solver = getParam(args, DEFAULT_SOLVER, SOLVERS.keySet(), SOLVERS::get);
 
         final Maze maze = generator.generate(height, width);
+        if (args != null && Arrays.asList(args).contains("--cellTypes")) {
+            maze.addTypes();
+        }
         OUTPUT.println(RENDERER.render(maze));
 
         final List<Coordinate> list = solver.solve(maze, startPoint, endPoint);

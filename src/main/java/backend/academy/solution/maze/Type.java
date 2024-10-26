@@ -5,5 +5,5 @@ package backend.academy.solution.maze;
  * @author Artem Televnoy
  */
 public enum Type {
-    WALL, PASSAGE, WAY, END, START
+    WALL, PASSAGE, WAY, END, START, COIN, BAD
 }

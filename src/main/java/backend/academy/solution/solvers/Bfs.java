@@ -10,7 +10,7 @@ import java.util.Queue;
 
 public class Bfs extends AbsAlgo {
     @Override
-    protected boolean algo(final Cell start) {
+    protected void algo(final Cell start) {
         used[start.row()][start.col()] = true;
         final Map<Cell, Cell> cellParents = new HashMap<>();
 
@@ -35,8 +35,6 @@ public class Bfs extends AbsAlgo {
                 }
             }
         } while (!queue.isEmpty());
-
-        return false;
     }
 
     private void buildWay(final Map<Cell, Cell> cellParents, final Coordinate start) {

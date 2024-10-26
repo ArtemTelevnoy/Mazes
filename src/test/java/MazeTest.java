@@ -3,6 +3,7 @@ import backend.academy.solution.maze.Cell;
 import backend.academy.solution.maze.Coordinate;
 import backend.academy.solution.maze.Edge;
 import backend.academy.solution.maze.Maze;
+import backend.academy.solution.maze.Type;
 import backend.academy.solution.renderers.SimpleRenderer;
 import backend.academy.solution.solvers.Bfs;
 import backend.academy.solution.solvers.Dfs;
@@ -33,12 +34,34 @@ public class MazeTest {
             new Edge(grid[2][0], grid[2][1]),
             new Edge(grid[0][1], grid[0][2])
         );
-
         return new Maze(3, 3, edges);
     }
 
-    private static void checkSolver(final Solver solver) {
-        final Maze maze = simpleMaze();
+    private static Maze simpleMaze2() {
+        final int h = 3;
+        final int w = 3;
+        final Cell[][] grid = new Cell[3][3];
+        for (int i = 0; i < h; i++) {
+            for (int j = 0; j < w; j++) {
+                grid[i][j] = new Cell(i, j);
+            }
+        }
+
+        final List<Edge> edges = List.of(
+            new Edge(grid[0][0], grid[0][1]),
+            new Edge(grid[0][1], grid[1][1]),
+            new Edge(grid[1][1], grid[1][2]),
+            new Edge(grid[1][2], grid[2][2]),
+            new Edge(grid[0][0], grid[1][0]),
+            new Edge(grid[1][0], grid[2][0]),
+            new Edge(grid[2][0], grid[2][1]),
+            new Edge(grid[0][1], grid[0][2]),
+            new Edge(grid[0][2], grid[1][2])
+        );
+        return new Maze(3, 3, edges);
+    }
+
+    private static void checkSolver(final Solver solver, final Maze maze) {
         Assertions.assertEquals(
             solver.solve(maze, new Coordinate(0, 0), new Coordinate(2, 2)),
             List.of(new Coordinate(0, 0), new Coordinate(0, 2),
@@ -48,12 +71,24 @@ public class MazeTest {
 
     @Test
     public void testDfs() {
-        checkSolver(new Dfs());
+        checkSolver(new Dfs(), simpleMaze());
     }
 
     @Test
     public void testBfs() {
-        checkSolver(new Bfs());
+        checkSolver(new Bfs(), simpleMaze());
+    }
+
+    @Test
+    public void testDfsBonus() {
+        final Maze maze = simpleMaze2();
+        maze.setEl(new Coordinate(2, 2), Type.BAD);
+
+        Assertions.assertEquals(
+            new Dfs().solve(maze, new Coordinate(0, 0), new Coordinate(2, 2)),
+            List.of(new Coordinate(0, 0), new Coordinate(0, 2),
+                new Coordinate(0, 4), new Coordinate(2, 4),
+                new Coordinate(4, 4)));
     }
 
     @Test

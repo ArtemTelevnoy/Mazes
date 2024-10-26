@@ -1,5 +1,7 @@
 package backend.academy.solution.maze;
 
+import java.security.SecureRandom;
+import java.util.ArrayList;
 import java.util.List;
 import lombok.Getter;
 import static java.lang.Math.min;
@@ -8,11 +10,13 @@ import static java.lang.Math.min;
  * class for imitating maze
  * @author Artem Televnoy
  */
-public final class Maze {
-    @Getter private final int height;
-    @Getter private final int width;
+ @SuppressWarnings("all") // Contents of array 'cellTypes' are written to, but never read
+ @Getter public final class Maze {
+    private final int height;
+    private final int width;
     private final Type[][] cellTypes;
     private final Cell[][] cellsMaze;
+    private final SecureRandom RANDOM = new SecureRandom();
 
     /**
      * Constructor
@@ -59,6 +63,24 @@ public final class Maze {
         }
     }
 
+    public void addTypes() {
+        final List<Coordinate> cells = new ArrayList<>(height * width);
+
+        for (int i = 0; i < height; i++) {
+            for (int j = 0; j < width; j++) {
+                cells.add(new Coordinate(i * 2, j * 2));
+            }
+        }
+
+        for (int i = 0; i < min(height, width); i++) {
+            final Coordinate cord = cells.get(RANDOM.nextInt(cells.size()));
+
+            final Type newType = RANDOM.nextInt(2) == 0 ? Type.COIN : Type.BAD;
+            cellTypes[cord.row()][cord.col()] = newType;
+            cellsMaze[cord.row() / 2][cord.col() / 2].type(newType);
+        }
+    }
+
     private static Coordinate makeCord(final Cell cell) {
         return new Coordinate(cell.row() * 2, cell.col() * 2);
     }
@@ -69,27 +91,12 @@ public final class Maze {
     }
 
     /**
-     * get types of cells of maze
-     * @return array of {@link Type} of maze
-     */
-    public Type[][] getMaze() {
-        return cellTypes;
-    }
-
-    /**
-     * get cells of maze
-     * @return array of {@link Cell} of maze
-     */
-    public Cell[][] getCellMaze() {
-        return cellsMaze;
-    }
-
-    /**
      * set element on grid
      * @param cord {@link Coordinate} of el
      * @param type {@link Type} of el
      */
     public void setEl(final Coordinate cord, final Type type) {
         cellTypes[cord.row()][cord.col()] = type;
+        cellsMaze[cord.row() / 2][cord.col() / 2].type(type);
     }
 }
