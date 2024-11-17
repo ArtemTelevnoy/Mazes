@@ -58,8 +58,8 @@ import static java.lang.Math.min;
             final Coordinate edgeIndex = combCord(makeCord(c1), makeCord(c2));
             cellTypes[edgeIndex.row()][edgeIndex.col()] = Type.PASSAGE;
 
-            cellsMaze[c1.row()][c1.col()].addEl(c2);
-            cellsMaze[c2.row()][c2.col()].addEl(c1);
+            cellsMaze[c1.row()][c1.col()].addNeighbor(c2);
+            cellsMaze[c2.row()][c2.col()].addNeighbor(c1);
         }
     }
 

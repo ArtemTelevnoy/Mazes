@@ -14,7 +14,7 @@ public class Dfs extends AbsAlgo {
             default -> 0;
         };
 
-        if (now.isThatCell(end())) {
+        if (now.isEqualCord(end())) {
             if (curWeight <= maxWeight) {
                 maxWeight = curWeight;
                 way().clear();

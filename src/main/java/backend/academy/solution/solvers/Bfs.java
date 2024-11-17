@@ -20,7 +20,7 @@ public class Bfs extends AbsAlgo {
         do {
             final Cell v = queue.poll();
 
-            if (v.isThatCell(end())) {
+            if (v.isEqualCord(end())) {
                 buildWay(cellParents, start.getViewCord());
                 break;
             }
@@ -41,7 +41,7 @@ public class Bfs extends AbsAlgo {
         Cell cell = cellMaze[end().row()][end().col()];
         way().add(cell.getViewCord());
 
-        while (!cell.isThatCell(start)) {
+        while (!cell.isEqualCord(start)) {
             final Cell now = cellParents.get(cell);
             way().add(now.getViewCord());
             cell = now;

@@ -1,7 +1,7 @@
 package backend.academy.solution.maze;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -12,7 +12,7 @@ import lombok.Setter;
 @Getter public final class Cell {
     private final int row;
     private final int col;
-    private final List<Cell> neighbors = new ArrayList<>();
+    private final Set<Cell> neighbors = new HashSet<>();
     @Setter private Type type = Type.PASSAGE;
 
     /**
@@ -30,7 +30,7 @@ import lombok.Setter;
      * @param another {@link Coordinate}
      * @return res of equals
      */
-    public boolean isThatCell(final Coordinate another) {
+    public boolean isEqualCord(final Coordinate another) {
         return col == another.col() && row == another.row();
     }
 
@@ -46,7 +46,7 @@ import lombok.Setter;
      * adding neighbor
      * @param cell new neighbor {@link Cell}
      */
-    public void addEl(final Cell cell) {
+    public void addNeighbor(final Cell cell) {
         neighbors.add(cell);
     }
 }

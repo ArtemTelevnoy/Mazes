@@ -52,16 +52,16 @@ public class PrimGen implements Generator {
         for (int y = 0; y < height; y++) {
             for (int x = 0; x < width; x++) {
                 if (x > 0) {
-                    grid[y][x].addEl(grid[y][x - 1]);
+                    grid[y][x].addNeighbor(grid[y][x - 1]);
                 }
                 if (x < width - 1) {
-                    grid[y][x].addEl(grid[y][x + 1]);
+                    grid[y][x].addNeighbor(grid[y][x + 1]);
                 }
                 if (y > 0) {
-                    grid[y][x].addEl(grid[y - 1][x]);
+                    grid[y][x].addNeighbor(grid[y - 1][x]);
                 }
                 if (y < height - 1) {
-                    grid[y][x].addEl(grid[y + 1][x]);
+                    grid[y][x].addNeighbor(grid[y + 1][x]);
                 }
             }
         }
